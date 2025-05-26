@@ -1,0 +1,23 @@
+{
+  "name": "file-management-system",
+  "version": "1.0.0",
+  "description": "A file management system simulation using Electron.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^28.0.0"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0"
+  },
+  "keywords": [
+    "file",
+    "management",
+    "system",
+    "electron"
+  ],
+  "author": "Your Name",
+  "license": "ISC"
+}

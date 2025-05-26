@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Management System</title>
+    <link rel="stylesheet" href="src/styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>File Management System</h1>
+            <div id="path-bar">
+                <span id="current-path"></span>
+            </div>
+            <div id="action-bar">
+                <button id="btn-back"><i class="fas fa-arrow-left"></i> Back</button>
+                <button id="btn-refresh"><i class="fas fa-sync"></i> Refresh</button>
+                <button id="btn-toggle-terminal"><i class="fas fa-terminal"></i> Toggle Terminal</button>
+            </div>
+        </header>
+        <main>
+            <div id="file-list-container">
+                <table id="file-list">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Size</th>
+                            <th>Modified</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- File items will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Terminal Component -->
+            <div id="terminal" class="terminal-container hidden">
+                <div class="terminal-header">
+                    <span>Command Line Interface</span>
+                    <button id="btn-clear-terminal"><i class="fas fa-eraser"></i></button>
+                </div>
+                <div id="terminal-output" class="terminal-output">
+                    <div class="terminal-welcome">Welcome to File System Simulator Command Line</div>
+                    <div class="terminal-help">Type 'help' to see available commands</div>
+                </div>
+                <div class="terminal-input-line">
+                    <span class="prompt">$</span>
+                    <input type="text" id="terminal-input" autofocus placeholder="Type a command...">
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="src/renderer.js"></script>
+</body>
+</html>
