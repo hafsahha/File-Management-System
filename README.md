@@ -18,6 +18,8 @@ Proyek ini adalah simulator sistem berkas yang dibangun menggunakan **Electron**
 
 Simulator Sistem Berkas ini menggunakan sistem berkas virtual yang ada di memori (in-memory) daripada sistem berkas yang sesungguhnya di komputer. Hal ini memungkinkan eksperimen yang aman tanpa mempengaruhi berkas asli. Aplikasi ini memiliki antarmuka GUI yang mirip dengan file explorer dan antarmuka terminal baris perintah, yang membuatnya cocok untuk pembelajaran konsep manajemen berkas pada sistem operasi.
 
+https://github.com/user-attachments/assets/5091ad32-4771-4685-b755-3fd2159be740
+
 ## Fitur
 
 * **Sistem Berkas Virtual di Memori**: Semua operasi dilakukan pada sistem berkas yang disimulasikan
