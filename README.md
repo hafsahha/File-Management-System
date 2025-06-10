@@ -52,9 +52,20 @@ file-management-system/
 ├── index.html                # Antarmuka HTML utama
 ├── package.json              # Konfigurasi proyek dan dependensi
 ├── preload.js                # Mengekspos API Node.js dengan aman ke proses renderer
+├── presentation.md           # Dokumentasi presentasi proyek
+├── README.md                 # Dokumentasi proyek
+├── assets/
+│   └── icons/                # Ikon UI
+│       ├── delete.svg
+│       ├── file.svg
+│       └── folder.svg
 ├── src/
+│   ├── editor.html           # Editor untuk file virtual
 │   ├── main.js               # Proses utama (titik masuk aplikasi)
 │   ├── renderer.js           # Proses renderer (logika UI)
+│   ├── memory_visualizer_guide.md # Panduan visualisasi memori
+│   ├── memoryVisualizer_fixed.html    # Versi visualisasi memori yang digunakan
+│   ├── testMemoryVisualizer.js        # Pengujian untuk visualisasi memori
 │   ├── components/           # Komponen UI
 │   │   ├── ActionBar.js      # Komponen tombol aksi
 │   │   ├── FileList.js       # Komponen tampilan daftar file
@@ -62,12 +73,8 @@ file-management-system/
 │   ├── styles/
 │   │   └── main.css          # Gaya aplikasi
 │   └── utils/
+│       ├── fileSystem.js     # Abstraksi interaksi sistem file
 │       └── virtualFileSystem.js  # Implementasi sistem file dalam memori
-└── assets/
-    └── icons/                # Ikon UI
-        ├── delete.svg
-        ├── file.svg
-        └── folder.svg
 ```
 
 ## Instalasi
@@ -143,8 +150,4 @@ Kontribusi sangat diterima! Silakan buka issue atau kirim pull request untuk pen
 
 ## Lisensi
 
-<<<<<<< HEAD
 Proyek ini dilisensikan di bawah Lisensi MIT.
-=======
-Proyek ini dilisensikan di bawah Lisensi MIT.
->>>>>>> 677bacba6cc2e9afc4bba57f4629d51f2a44488c
