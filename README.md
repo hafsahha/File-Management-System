@@ -13,7 +13,8 @@ Proyek ini adalah simulator sistem file yang dibangun menggunakan Electron dan N
   * Hafsah Hamidah – 2311474
   * Lyan Nazhabil Dzuquwwa – 2308428
   
-## Gambaran Umum Program
+
+## Gambaran Umum
 
 Simulator Sistem File menggunakan sistem file virtual dalam memori, bukan sistem file asli komputer Anda. Hal ini memungkinkan eksperimen yang aman tanpa memengaruhi file asli. Aplikasi ini memiliki antarmuka GUI seperti penjelajah file dan antarmuka terminal berbasis perintah, sehingga edukatif untuk memahami konsep manajemen file pada sistem operasi.
 
@@ -142,4 +143,8 @@ Kontribusi sangat diterima! Silakan buka issue atau kirim pull request untuk pen
 
 ## Lisensi
 
+<<<<<<< HEAD
 Proyek ini dilisensikan di bawah Lisensi MIT.
+=======
+Proyek ini dilisensikan di bawah Lisensi MIT.
+>>>>>>> 677bacba6cc2e9afc4bba57f4629d51f2a44488c
