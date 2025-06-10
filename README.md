@@ -1,6 +1,6 @@
-# Simulator Sistem Berkas Virtual
+# Simulator Sistem File Virtual
 
-Proyek ini adalah simulator sistem berkas yang dibangun menggunakan **Electron** dan **Node.js** yang mendemonstrasikan bagaimana sistem operasi mengelola berkas dan direktori. Proyek ini menggabungkan antarmuka pengguna grafis (GUI) dengan terminal baris perintah untuk operasi berkas.
+Proyek ini adalah simulator sistem file yang dibangun menggunakan Electron dan Node.js untuk mendemonstrasikan bagaimana sistem operasi mengelola file dan direktori. Simulator ini menggabungkan antarmuka grafis dengan terminal berbasis perintah untuk operasi file.
 
 ## Identitas Kelompok
 
@@ -13,29 +13,37 @@ Proyek ini adalah simulator sistem berkas yang dibangun menggunakan **Electron**
   * Devia Nursa’adah – 2006363
   * Hafsah Hamidah – 2311474
   * Lyan Nazhabil Dzuquwwa – 2308428
-
+  
 ## Gambaran Umum
 
-Simulator Sistem Berkas ini menggunakan sistem berkas virtual yang ada di memori (in-memory) daripada sistem berkas yang sesungguhnya di komputer. Hal ini memungkinkan eksperimen yang aman tanpa mempengaruhi berkas asli. Aplikasi ini memiliki antarmuka GUI yang mirip dengan file explorer dan antarmuka terminal baris perintah, yang membuatnya cocok untuk pembelajaran konsep manajemen berkas pada sistem operasi.
+Simulator Sistem File menggunakan sistem file virtual dalam memori, bukan sistem file asli komputer Anda. Hal ini memungkinkan eksperimen yang aman tanpa memengaruhi file asli. Aplikasi ini memiliki antarmuka GUI seperti penjelajah file dan antarmuka terminal berbasis perintah, sehingga edukatif untuk memahami konsep manajemen file pada sistem operasi.
 
 ## Fitur
 
-* **Sistem Berkas Virtual di Memori**: Semua operasi dilakukan pada sistem berkas yang disimulasikan
-* **Antarmuka Ganda**:
-
-  * GUI grafis untuk navigasi berkas/folder dan operasi
-  * Terminal baris perintah untuk mengeksekusi perintah sistem berkas
-* **Operasi Berkas**:
-
-  * Membuat direktori (`mkdir`)
-  * Membuat berkas (`touch`)
-  * Menavigasi direktori (`cd`)
-  * Menampilkan isi direktori (`ls`)
-  * Menghapus berkas/folder (`rm`)
-  * Menampilkan isi berkas (`cat`)
-  * Menampilkan jalur direktori saat ini (`pwd`)
-  * Menampilkan teks (`echo`)
-* **Representasi Visual**: Ikon untuk membedakan antara berkas dan folder
+- **Sistem File Virtual Dalam Memori**: Semua operasi dilakukan pada sistem file yang disimulasikan
+- **Antarmuka Ganda**:
+  - GUI grafis dengan navigasi file/folder dan operasi
+  - Terminal berbasis perintah untuk menjalankan perintah sistem file
+- **Operasi File**:
+  - Membuat direktori (`mkdir`)
+  - Membuat file (`touch`)
+  - Navigasi direktori (`cd`)
+  - Menampilkan isi direktori (`ls`)
+  - Menghapus file/folder (`rm`)
+  - Menampilkan isi file (`cat`)
+  - Mengganti nama file/folder (`rename`)
+  - Melihat alokasi memori (`visualize` atau `vis`)
+- **Strategi Alokasi Memori**:
+  - Alokasi kontigu untuk file kecil
+  - Alokasi tertaut untuk penyimpanan terfragmentasi
+  - Alokasi terindeks untuk file besar
+- **Visualisasi Memori**:
+  - Representasi grafis blok penyimpanan
+  - Blok berwarna berdasarkan jenis alokasi
+  - Statistik penggunaan memori dan fragmentasi
+  - Detail alokasi file dengan metrik efisiensi
+  - Skenario uji untuk berbagai strategi alokasi
+- **Representasi Visual**: Ikon untuk membedakan file dan folder
 
 ## Struktur Proyek
 
@@ -49,12 +57,12 @@ file-management-system/
 │   ├── renderer.js           # Proses renderer (logika UI)
 │   ├── components/           # Komponen UI
 │   │   ├── ActionBar.js      # Komponen tombol aksi
-│   │   ├── FileList.js       # Komponen tampilan daftar berkas
-│   │   └── FileOperations.js # Penangan operasi berkas
+│   │   ├── FileList.js       # Komponen tampilan daftar file
+│   │   └── FileOperations.js # Penangan operasi file
 │   ├── styles/
 │   │   └── main.css          # Gaya aplikasi
 │   └── utils/
-│       └── virtualFileSystem.js  # Implementasi sistem berkas dalam memori
+│       └── virtualFileSystem.js  # Implementasi sistem file dalam memori
 └── assets/
     └── icons/                # Ikon UI
         ├── delete.svg
@@ -64,18 +72,17 @@ file-management-system/
 
 ## Instalasi
 
-1. Pastikan kamu telah menginstal [Node.js](https://nodejs.org/) di sistemmu
+1. Pastikan Anda telah menginstal [Node.js](https://nodejs.org/) di sistem Anda
 2. Clone atau unduh repositori ini
 3. Buka terminal dan navigasikan ke direktori proyek
 4. Instal dependensi:
-
    ```
    npm install
    ```
 
 ## Menjalankan Aplikasi
 
-Untuk memulai **Simulator Sistem Berkas**:
+Untuk memulai Simulator Sistem File:
 
 ```
 npm start
@@ -85,102 +92,50 @@ npm start
 
 ### Antarmuka GUI
 
-* **Navigasi**: Klik pada nama folder untuk menavigasi ke direktori
-* **Kembali**: Gunakan tombol kembali untuk kembali ke direktori induk
-* **Segarkan**: Klik tombol segarkan untuk memperbarui daftar berkas
-* **Hapus**: Gunakan tombol hapus di samping berkas/folder untuk menghapusnya
-* **Toggle Terminal**: Buka antarmuka baris perintah untuk operasi lebih lanjut
+- **Navigasi**: Klik nama folder untuk masuk ke direktori
+- **Kembali**: Gunakan tombol kembali untuk kembali ke direktori induk
+- **Refresh**: Klik tombol refresh untuk memperbarui daftar file
+- **Hapus**: Gunakan tombol hapus di sebelah file/folder untuk menghapusnya
+- **Toggle Terminal**: Buka antarmuka terminal untuk operasi yang lebih lanjut
 
 ### Antarmuka Terminal
 
 Terminal mendukung perintah berikut:
 
-* `ls [path]` - Menampilkan berkas dan direktori
-* `cd <path>` - Mengubah direktori (gunakan `..` untuk naik satu level)
-* `mkdir <dirname>` - Membuat direktori
-* `rm <path>` - Menghapus berkas atau direktori
-* `touch <filename>` - Membuat berkas kosong
-* `cat <filename>` - Menampilkan isi berkas
-* `pwd` - Menampilkan jalur direktori saat ini
-* `echo <text>` - Menampilkan teks
-* `help` - Menampilkan perintah yang tersedia
+- `ls [path]` - Menampilkan file dan direktori
+- `cd <path>` - Berpindah direktori (gunakan `..` untuk naik satu level)
+- `mkdir <dirname>` - Membuat direktori
+- `rm <path>` - Menghapus file atau direktori
+- `touch <filename>` - Membuat file kosong
+- `nano <filename>` - Membuka file untuk diedit
+- `pwd` - Menampilkan path direktori saat ini
+- `help` - Menampilkan perintah yang tersedia
+- `visualize` atau `vis` - Melihat alokasi memori
 
-### Sistem Berkas Virtual
+### Sistem File Virtual
 
-Aplikasi ini dimulai dengan struktur direktori contoh yang berisi:
+Aplikasi dimulai dengan struktur direktori contoh yang memuat:
+- `/documents/` - File dokumen contoh
+- `/pictures/` - File gambar contoh
+- `/music/` - File musik contoh
 
-* `/documents/` - Berkas dokumen contoh
-* `/pictures/` - Berkas gambar contoh
-* `/music/` - Berkas musik contoh
+Struktur ini dimuat dalam memori dan tidak memengaruhi sistem file asli Anda.
 
-Struktur ini dimuat di memori dan tidak mempengaruhi sistem berkas asli.
+## Tujuan Edukasi
 
-## Tujuan Pendidikan
+Simulator ini dirancang untuk mendemonstrasikan bagaimana sistem operasi mengelola file dan direktori. Simulator ini mengilustrasikan konsep seperti:
 
-Simulator ini dirancang untuk mendemonstrasikan bagaimana sistem operasi mengelola berkas dan direktori. Ini mengilustrasikan konsep-konsep seperti:
-
-* Hierarki dan jalur sistem berkas
-* Operasi berkas (pembuatan, penghapusan, navigasi)
-* Parsing perintah dan eksekusi
-* Interaksi antarmuka pengguna dengan sistem berkas
+- Hierarki dan path sistem file
+- Operasi file (pembuatan, penghapusan, navigasi)
+- Parsing dan eksekusi perintah
+- Interaksi antarmuka pengguna dengan sistem file
 
 ## Detail Teknis
 
-* **Framework**: Electron.js
-* **UI**: HTML, CSS, dan JavaScript
-* **Arsitektur**: Menggunakan proses utama dan proses renderer dengan komunikasi IPC
-* **Sistem Berkas**: Implementasi kustom dalam memori untuk tujuan pendidikan
-```
-
-  │   ├── components            # Berisi komponen yang dapat digunakan kembali
-  │   │   ├── FileList.js       # Menampilkan daftar berkas dan direktori
-  │   │   ├── ActionBar.js      # Berisi tombol untuk operasi berkas
-  │   │   └── FileOperations.js  # Logika operasi berkas
-  │   ├── utils                 # Fungsi utilitas untuk operasi sistem berkas
-  │   │   └── fileSystem.js     # Mengabstraksi interaksi dengan sistem berkas
-  │   └── styles                # Gaya untuk aplikasi
-  │       └── main.css          # Gaya utama
-  ├── assets                    # Berisi aset seperti ikon
-  │   └── icons
-  │       ├── folder.svg        # Ikon untuk folder
-  │       ├── file.svg          # Ikon untuk berkas
-  │       └── delete.svg        # Ikon untuk aksi hapus
-  ├── index.html                # Berkas HTML utama
-  ├── package.json              # Berkas konfigurasi untuk npm
-  ├── preload.js                # Mengekspos fungsionalitas Node.js dengan aman
-  └── README.md                 # Dokumentasi proyek
-
-```
-
-## Instalasi
-
-1. Clone repositori:
-```
-
-git clone <repository-url>
-cd file-management-system
-
-```
-
-2. Instal dependensi:
-```
-
-npm install
-
-```
-
-3. Mulai aplikasi:
-```
-
-npm start
-
-```
-
-## Penggunaan
-
-- Jalankan aplikasi untuk melihat antarmuka manajemen berkas.
-- Gunakan bilah aksi untuk membuat direktori, menghapus berkas, dan memperbarui daftar berkas.
-- Navigasi melalui sistem berkas menggunakan fungsionalitas yang disediakan.
+- **Framework**: Electron.js
+- **UI**: HTML, CSS, dan JavaScript
+- **Arsitektur**: Menggunakan proses utama dan proses renderer dengan komunikasi IPC
+- **Sistem File**: Implementasi dalam memori untuk tujuan edukasi
 
 ## Kontribusi
 
@@ -188,5 +143,4 @@ Kontribusi sangat diterima! Silakan buka issue atau kirim pull request untuk pen
 
 ## Lisensi
 
-Proyek ini dilisensikan di bawah **MIT License**.
-
+Proyek ini dilisensikan di bawah Lisensi MIT.
