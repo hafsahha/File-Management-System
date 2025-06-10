@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        #filename {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        #editor {
+            flex-grow: 1;
+            width: 100%;
+            padding: 10px;
+            font-family: monospace;
+            resize: none;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+        #save {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+        #cancel {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Edit File</h2>
+    <div id="filename"></div>
+    <textarea id="editor" autofocus></textarea>
+    <div class="buttons">
+        <button id="save">Save</button>
+        <button id="cancel">Cancel</button>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+        
+        // Get elements
+        const filenameEl = document.getElementById('filename');
+        const editorEl = document.getElementById('editor');
+        const saveBtn = document.getElementById('save');
+        const cancelBtn = document.getElementById('cancel');
+        
+        // Initialize editor with data from main process
+        ipcRenderer.on('init-editor', (event, data) => {
+            filenameEl.textContent = `Editing: ${data.filename}`;
+            editorEl.value = data.content;
+        });
+        
+        // Save button click
+        saveBtn.addEventListener('click', () => {
+            ipcRenderer.send('save-file', editorEl.value);
+        });
+        
+        // Cancel button click
+        cancelBtn.addEventListener('click', () => {
+            ipcRenderer.send('cancel-edit');
+        });
+    </script>
+</body>
+</html>

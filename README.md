@@ -1,166 +1,146 @@
-# Virtual File System Simulator
+# Simulator Sistem File Virtual
 
-This project is a file system simulator built using Electron and Node.js that demonstrates how operating systems manage files and directories. It combines a graphical user interface with a command-line terminal for file operations.
+Proyek ini adalah simulator sistem file yang dibangun menggunakan Electron dan Node.js untuk mendemonstrasikan bagaimana sistem operasi mengelola file dan direktori. Simulator ini menggabungkan antarmuka grafis dengan terminal berbasis perintah untuk operasi file.
 
-## Overview
+## Identitas Kelompok
 
-The File System Simulator uses a virtual in-memory file system rather than the actual file system of your computer. This allows for safe experimentation without affecting real files. The application features both a GUI interface similar to a file explorer and a command-line terminal interface, making it educational for understanding operating system file management concepts.
+* **Kelas**: C1
+* **Dosen Pengampu**: Dr. Rasim, S.T., M.T.
+* **Kelompok**: 10
+* **Anggota Kelompok**:
 
-## Features
+  * Daffa Faiz Restu Oktavian – 2309013
+  * Devia Nursa’adah – 2006363
+  * Hafsah Hamidah – 2311474
+  * Lyan Nazhabil Dzuquwwa – 2308428
+  
+## Gambaran Umum
 
-- **Virtual In-Memory File System**: All operations are performed on a simulated file system
-- **Dual Interface**: 
-  - Graphical UI with file/folder navigation and operations
-  - Command-line terminal for executing file system commands
-- **File Operations**:
-  - Create directories (`mkdir`)
-  - Create files (`touch`)
-  - Navigate directories (`cd`)
-  - List contents (`ls`)
-  - Delete files/folders (`rm`)
-  - Display file contents (`cat`)
-  - Show current path (`pwd`)
-  - Display text (`echo`)
-- **Visual Representation**: Icons to distinguish between files and folders
+Simulator Sistem File menggunakan sistem file virtual dalam memori, bukan sistem file asli komputer Anda. Hal ini memungkinkan eksperimen yang aman tanpa memengaruhi file asli. Aplikasi ini memiliki antarmuka GUI seperti penjelajah file dan antarmuka terminal berbasis perintah, sehingga edukatif untuk memahami konsep manajemen file pada sistem operasi.
 
-## Project Structure
+## Fitur
+
+- **Sistem File Virtual Dalam Memori**: Semua operasi dilakukan pada sistem file yang disimulasikan
+- **Antarmuka Ganda**:
+  - GUI grafis dengan navigasi file/folder dan operasi
+  - Terminal berbasis perintah untuk menjalankan perintah sistem file
+- **Operasi File**:
+  - Membuat direktori (`mkdir`)
+  - Membuat file (`touch`)
+  - Navigasi direktori (`cd`)
+  - Menampilkan isi direktori (`ls`)
+  - Menghapus file/folder (`rm`)
+  - Menampilkan isi file (`cat`)
+  - Mengganti nama file/folder (`rename`)
+  - Melihat alokasi memori (`visualize` atau `vis`)
+- **Strategi Alokasi Memori**:
+  - Alokasi kontigu untuk file kecil
+  - Alokasi tertaut untuk penyimpanan terfragmentasi
+  - Alokasi terindeks untuk file besar
+- **Visualisasi Memori**:
+  - Representasi grafis blok penyimpanan
+  - Blok berwarna berdasarkan jenis alokasi
+  - Statistik penggunaan memori dan fragmentasi
+  - Detail alokasi file dengan metrik efisiensi
+  - Skenario uji untuk berbagai strategi alokasi
+- **Representasi Visual**: Ikon untuk membedakan file dan folder
+
+## Struktur Proyek
 
 ```
 file-management-system/
-├── index.html                # Main HTML interface
-├── package.json              # Project configuration and dependencies
-├── preload.js                # Safely exposes Node.js APIs to renderer process
+├── index.html                # Antarmuka HTML utama
+├── package.json              # Konfigurasi proyek dan dependensi
+├── preload.js                # Mengekspos API Node.js dengan aman ke proses renderer
 ├── src/
-│   ├── main.js               # Main process (application entry point)
-│   ├── renderer.js           # Renderer process (UI logic)
-│   ├── components/           # UI components
-│   │   ├── ActionBar.js      # Action buttons component
-│   │   ├── FileList.js       # File list display component
-│   │   └── FileOperations.js # File operation handlers
+│   ├── main.js               # Proses utama (titik masuk aplikasi)
+│   ├── renderer.js           # Proses renderer (logika UI)
+│   ├── components/           # Komponen UI
+│   │   ├── ActionBar.js      # Komponen tombol aksi
+│   │   ├── FileList.js       # Komponen tampilan daftar file
+│   │   └── FileOperations.js # Penangan operasi file
 │   ├── styles/
-│   │   └── main.css          # Application styling
+│   │   └── main.css          # Gaya aplikasi
 │   └── utils/
-│       └── virtualFileSystem.js  # In-memory file system implementation
+│       └── virtualFileSystem.js  # Implementasi sistem file dalam memori
 └── assets/
-    └── icons/                # UI icons
+    └── icons/                # Ikon UI
         ├── delete.svg
         ├── file.svg
         └── folder.svg
 ```
 
-## Installation
+## Instalasi
 
-1. Make sure you have [Node.js](https://nodejs.org/) installed on your system
-2. Clone or download this repository
-3. Open a terminal and navigate to the project directory
-4. Install the dependencies:
+1. Pastikan Anda telah menginstal [Node.js](https://nodejs.org/) di sistem Anda
+2. Clone atau unduh repositori ini
+3. Buka terminal dan navigasikan ke direktori proyek
+4. Instal dependensi:
    ```
    npm install
    ```
 
-## Running the Application
+## Menjalankan Aplikasi
 
-To start the File System Simulator:
+Untuk memulai Simulator Sistem File:
 
 ```
 npm start
 ```
 
-## How to Use
+## Cara Menggunakan
 
-### GUI Interface
+### Antarmuka GUI
 
-- **Navigate**: Click on folder names to navigate into directories
-- **Go Back**: Use the back button to return to the parent directory
-- **Refresh**: Click the refresh button to update the file list
-- **Delete**: Use the delete button next to files/folders to remove them
-- **Toggle Terminal**: Open the command-line interface for more advanced operations
+- **Navigasi**: Klik nama folder untuk masuk ke direktori
+- **Kembali**: Gunakan tombol kembali untuk kembali ke direktori induk
+- **Refresh**: Klik tombol refresh untuk memperbarui daftar file
+- **Hapus**: Gunakan tombol hapus di sebelah file/folder untuk menghapusnya
+- **Toggle Terminal**: Buka antarmuka terminal untuk operasi yang lebih lanjut
 
-### Terminal Interface
+### Antarmuka Terminal
 
-The terminal supports the following commands:
+Terminal mendukung perintah berikut:
 
-- `ls [path]` - List files and directories
-- `cd <path>` - Change directory (use `..` to go up one level)
-- `mkdir <dirname>` - Create a directory
-- `rm <path>` - Remove a file or directory
-- `touch <filename>` - Create an empty file
-- `cat <filename>` - Display file contents
-- `pwd` - Show current directory path
-- `echo <text>` - Display text
-- `help` - Show available commands
+- `ls [path]` - Menampilkan file dan direktori
+- `cd <path>` - Berpindah direktori (gunakan `..` untuk naik satu level)
+- `mkdir <dirname>` - Membuat direktori
+- `rm <path>` - Menghapus file atau direktori
+- `touch <filename>` - Membuat file kosong
+- `nano <filename>` - Membuka file untuk diedit
+- `pwd` - Menampilkan path direktori saat ini
+- `help` - Menampilkan perintah yang tersedia
+- `visualize` atau `vis` - Melihat alokasi memori
 
-### Virtual File System
+### Sistem File Virtual
 
-The application starts with a sample directory structure containing:
-- `/documents/` - Sample document files
-- `/pictures/` - Sample picture files
-- `/music/` - Sample music files
+Aplikasi dimulai dengan struktur direktori contoh yang memuat:
+- `/documents/` - File dokumen contoh
+- `/pictures/` - File gambar contoh
+- `/music/` - File musik contoh
 
-This structure is loaded in memory and does not affect your actual file system.
+Struktur ini dimuat dalam memori dan tidak memengaruhi sistem file asli Anda.
 
-## Educational Purpose
+## Tujuan Edukasi
 
-This simulator is designed to demonstrate how operating systems manage files and directories. It illustrates concepts like:
+Simulator ini dirancang untuk mendemonstrasikan bagaimana sistem operasi mengelola file dan direktori. Simulator ini mengilustrasikan konsep seperti:
 
-- File system hierarchies and paths
-- File operations (creation, deletion, navigation)
-- Command parsing and execution
-- User interface interaction with file systems
+- Hierarki dan path sistem file
+- Operasi file (pembuatan, penghapusan, navigasi)
+- Parsing dan eksekusi perintah
+- Interaksi antarmuka pengguna dengan sistem file
 
-## Technical Details
+## Detail Teknis
 
 - **Framework**: Electron.js
-- **UI**: HTML, CSS, and JavaScript
-- **Architecture**: Uses a main process and renderer process with IPC communication
-- **File System**: Custom in-memory implementation for educational purposes
-│   ├── components            # Contains reusable components
-│   │   ├── FileList.js       # Displays a list of files and directories
-│   │   ├── ActionBar.js      # Contains buttons for file operations
-│   │   └── FileOperations.js  # Logic for file operations
-│   ├── utils                 # Utility functions for file system operations
-│   │   └── fileSystem.js     # Abstracts file system interactions
-│   └── styles                # Styles for the application
-│       └── main.css          # Main stylesheet
-├── assets                    # Contains assets like icons
-│   └── icons
-│       ├── folder.svg        # Icon for folders
-│       ├── file.svg          # Icon for files
-│       └── delete.svg        # Icon for delete action
-├── index.html                # Main HTML file
-├── package.json              # Configuration file for npm
-├── preload.js                # Exposes Node.js functionalities securely
-└── README.md                 # Project documentation
-```
+- **UI**: HTML, CSS, dan JavaScript
+- **Arsitektur**: Menggunakan proses utama dan proses renderer dengan komunikasi IPC
+- **Sistem File**: Implementasi dalam memori untuk tujuan edukasi
 
-## Installation
+## Kontribusi
 
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   cd file-management-system
-   ```
+Kontribusi sangat diterima! Silakan buka issue atau kirim pull request untuk peningkatan atau perbaikan bug.
 
-2. Install dependencies:
-   ```
-   npm install
-   ```
+## Lisensi
 
-3. Start the application:
-   ```
-   npm start
-   ```
-
-## Usage
-
-- Launch the application to view the file management interface.
-- Use the action bar to create directories, delete files, and refresh the file list.
-- Navigate through the file system using the provided functionalities.
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
-
-## License
-
-This project is licensed under the MIT License.
+Proyek ini dilisensikan di bawah Lisensi MIT.
