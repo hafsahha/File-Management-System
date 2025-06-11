@@ -16,6 +16,8 @@ Proyek ini adalah simulator sistem file yang dibangun menggunakan Electron dan N
 
 ## Gambaran Umum
 
+https://github.com/user-attachments/assets/3e5cb0d7-42b5-4f29-bc67-a443bf33c2a2
+
 Simulator Sistem File menggunakan sistem file virtual dalam memori, bukan sistem file asli komputer Anda. Hal ini memungkinkan eksperimen yang aman tanpa memengaruhi file asli. Aplikasi ini memiliki antarmuka GUI seperti penjelajah file dan antarmuka terminal berbasis perintah, sehingga edukatif untuk memahami konsep manajemen file pada sistem operasi.
 
 ## Fitur
