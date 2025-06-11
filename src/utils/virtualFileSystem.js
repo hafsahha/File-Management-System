@@ -238,10 +238,33 @@ function createVirtualFile(filePath, content = '') {
         
         console.log(`Creating file ${fileName} with content size: ${content.length} bytes`);
         console.log(`Calculated blocks needed: ${size}`);
-        
-        // Default to contiguous allocation for small files (less than 5 blocks)
+          // Default to contiguous allocation for small files (less than 5 blocks)
         // Try indexed allocation for large files
+        // But force linked allocation for files in /test/linked/ directory for visualization tests
         let allocationStrategy;
+        
+        // Force linked allocation for specific test files in the /test/linked/ directory
+        if (filePath.startsWith('/test/linked/')) {
+            console.log('Forcing linked allocation for file in /test/linked/ directory');
+            const linkedBlocks = allocateLinkedBlocks(size, filePath);
+            
+            if (linkedBlocks) {
+                parent.children[fileName] = {
+                    type: 'file',
+                    name: fileName,
+                    content: content,
+                    createdAt: new Date(),
+                    modifiedAt: new Date(),
+                    allocation: {
+                        strategy: 'linked',
+                        blocks: linkedBlocks
+                    }
+                };
+                console.log(`Created file using linked allocation: ${linkedBlocks.length} blocks`);
+                return true;
+            }
+            // If linked allocation fails, continue with normal allocation strategies
+        }
         
         if (size >= 5) {
             console.log('File is large, attempting Indexed allocation first...');

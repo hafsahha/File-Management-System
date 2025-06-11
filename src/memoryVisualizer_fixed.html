@@ -338,9 +338,41 @@
             let usedBlocks = 0;
             let fragmentCount = 0;
             let wasLastEmpty = true; // Start with true to not count the first allocated block as fragmentation
-            
-            console.log('Memory Grid: Total Blocks to render:', blocks.length);
+              console.log('Memory Grid: Total Blocks to render:', blocks.length);
             console.log('Blocks Data:', blocks);
+              // Debug linked allocation blocks
+            console.log('Debug - Files with linked allocation:');
+            let linkedFiles = 0;
+            let totalLinkedBlocks = 0;
+            
+            Object.keys(files).forEach(filePath => {
+                const fileInfo = files[filePath];
+                if (fileInfo.allocation && fileInfo.allocation.strategy === 'linked') {
+                    linkedFiles++;
+                    console.log('File:', filePath);
+                    console.log('Linked blocks:', fileInfo.allocation.blocks);
+                    console.log('Block count:', fileInfo.allocation.blocks.length);
+                    totalLinkedBlocks += fileInfo.allocation.blocks.length;
+                }
+            });
+            
+            console.log(`Found ${linkedFiles} files using linked allocation with ${totalLinkedBlocks} total linked blocks`);
+            
+            // Debug allocation strategy distribution
+            const allocationStats = {
+                contiguous: 0,
+                linked: 0,
+                indexed: 0
+            };
+            
+            Object.keys(files).forEach(filePath => {
+                const fileInfo = files[filePath];
+                if (fileInfo.allocation && fileInfo.allocation.strategy) {
+                    allocationStats[fileInfo.allocation.strategy]++;
+                }
+            });
+            
+            console.log('Allocation strategy distribution:', allocationStats);
             
             // Calculate stats
             blocks.forEach((block, index) => {
@@ -360,12 +392,18 @@
                         // Check if this block is part of a specific allocation strategy
                         let linkedBlock = false;
                         let indexedBlock = false;
-                        
-                        // Check allocation strategy by examining files
+                          // Check allocation strategy by examining files
                         Object.keys(files).forEach(filePath => {
-                            if (block === filePath) {
-                                const fileInfo = files[filePath];
-                                if (fileInfo.allocation) {
+                            const fileInfo = files[filePath];
+                            if (fileInfo.allocation) {
+                                // Check if this block belongs to a linked allocation file
+                                if (fileInfo.allocation.strategy === 'linked' && 
+                                    fileInfo.allocation.blocks && 
+                                    fileInfo.allocation.blocks.includes(index)) {
+                                    linkedBlock = true;
+                                } 
+                                // Check if this is the file path block
+                                else if (block === filePath) {
                                     if (fileInfo.allocation.strategy === 'linked') {
                                         linkedBlock = true;
                                     } else if (fileInfo.allocation.strategy === 'indexed') {
@@ -374,8 +412,7 @@
                                 }
                             }
                         });
-                        
-                        if (linkedBlock) {
+                          if (linkedBlock) {
                             blockClass = 'linked';
                             blockType = 'Linked Block';
                         } else if (indexedBlock) {
@@ -386,8 +423,7 @@
                             blockType = 'Contiguous Block';
                         }
                     }
-                    
-                    // Extract short identifier from path
+                      // Extract short identifier from path
                     let shortId = '';
                     if (block.includes('/')) {
                         const parts = block.split('/').filter(Boolean);
@@ -395,6 +431,13 @@
                             shortId = parts[parts.length - 1].substring(0, 2);
                         }
                     }
+                    
+                    // For linked blocks, show 'L' prefix for better identification
+                    // Only use linkedBlock variable within its defined scope
+                    if (blockClass === 'linked') {
+                        shortId = 'L:' + (shortId || index);
+                    }
+                    
                     blockEl.textContent = shortId || index.toString();
                     
                     if (wasLastEmpty && index > 0) {
@@ -488,18 +531,27 @@
             let linkedCount = 0;
             let indexedDataCount = 0;
             let indexBlockCount = 0;
-            
-            // Count blocks by type
+              // Count blocks by type
+            console.log('Counting blocks by allocation type...');
             Object.keys(files).forEach(filePath => {
                 const fileInfo = files[filePath];
                 if (fileInfo.allocation) {
-                    if (fileInfo.allocation.strategy === 'contiguous') {
+                    const strategy = fileInfo.allocation.strategy;
+                    console.log(`File ${filePath} uses ${strategy} allocation`);
+                    
+                    if (strategy === 'contiguous') {
                         contiguousCount += fileInfo.allocation.size;
-                    } else if (fileInfo.allocation.strategy === 'linked') {
-                        linkedCount += fileInfo.allocation.blocks.length;
-                    } else if (fileInfo.allocation.strategy === 'indexed') {
-                        indexedDataCount += fileInfo.allocation.dataBlocks.length;
+                        console.log(`  Added ${fileInfo.allocation.size} contiguous blocks, total: ${contiguousCount}`);
+                    } else if (strategy === 'linked') {
+                        const blockCount = fileInfo.allocation.blocks.length;
+                        linkedCount += blockCount;
+                        console.log(`  Added ${blockCount} linked blocks, total: ${linkedCount}`);
+                        console.log(`  Linked blocks: ${fileInfo.allocation.blocks.join(', ')}`);
+                    } else if (strategy === 'indexed') {
+                        const dataCount = fileInfo.allocation.dataBlocks.length;
+                        indexedDataCount += dataCount;
                         indexBlockCount++; // Count each index block
+                        console.log(`  Added ${dataCount} indexed data blocks and 1 index block, total: ${indexedDataCount} data, ${indexBlockCount} index`);
                     }
                 }
             });
@@ -508,8 +560,7 @@
             const totalSizeKB = totalBlocks; // Since 1 block = 1 KB
             const usedPercent = totalBlocks > 0 ? Math.round((usedBlocks / totalBlocks) * 100) : 0;
             const freePercent = totalBlocks > 0 ? Math.round((freeBlocks / totalBlocks) * 100) : 0;
-            
-            // Update display elements
+              // Update display elements
             totalBlocksEl.textContent = totalBlocks;
             document.getElementById('totalSizeKB').textContent = totalSizeKB;
             usedBlocksEl.textContent = usedBlocks;
@@ -522,6 +573,13 @@
             linkedBlocksEl.textContent = linkedCount;
             indexedDataBlocksEl.textContent = indexedDataCount;
             indexBlocksEl.textContent = indexBlockCount;
+            
+            // Log the final allocation counts
+            console.log('Final allocation counts:');
+            console.log(`  Contiguous blocks: ${contiguousCount}`);
+            console.log(`  Linked blocks: ${linkedCount}`);
+            console.log(`  Indexed data blocks: ${indexedDataCount}`);
+            console.log(`  Index blocks: ${indexBlockCount}`);
             
             // Calculate fragmentation
             // Fragmentation is measured by the number of transitions between allocated and free blocks
